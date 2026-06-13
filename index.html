@@ -44,12 +44,17 @@
     }
     .slide.active { display: flex; }
 
-    .tap-zone {
+    .tap-prev, .tap-next {
       position: absolute;
-      inset: 0;
-      cursor: pointer;
+      top: 0;
+      bottom: 0;
+      width: 50%;
       z-index: 10;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
+    .tap-prev { left: 0; }
+    .tap-next { right: 0; }
     .tap-hint {
       position: absolute;
       bottom: 2rem;
@@ -385,14 +390,14 @@
      ════════════════════════════ -->
 <section class="slide active" id="slide-cover">
   <div class="progress-bar" id="progress"></div>
-  <div class="big-year">2026</div>
+  <div class="big-year">2024</div>
   <div class="cover-inner">
     <p class="cover-label">Wrapped</p>
     <h1>Cardi<br>Wrapped</h1>
     <p class="cover-sub">Tu año en números.<br>Los que importan.</p>
   </div>
   <p class="tap-hint">Tocá para continuar</p>
-  <div class="tap-zone" onclick="nextSlide()"></div>
+  <div class="tap-prev" onclick="prevSlide()"></div><div class="tap-next" onclick="nextSlide()"></div>
 </section>
 
 
@@ -406,7 +411,7 @@
   <p class="number">14</p>
   <p class="stat-label">goles a los Raúles</p>
   <p class="footnote">Récord histórico. Los Raúles ya te tienen en la mira.</p>
-  <div class="tap-zone" onclick="nextSlide()"></div>
+  <div class="tap-prev" onclick="prevSlide()"></div><div class="tap-next" onclick="nextSlide()"></div>
 </section>
 
 
@@ -420,7 +425,7 @@
   <p class="number">31</p>
   <p class="stat-label">cambios de frente a Crapema</p>
   <p class="footnote">Promedio de 2.6 por mes. Carlovich estaría orgulloso.</p>
-  <div class="tap-zone" onclick="nextSlide()"></div>
+  <div class="tap-prev" onclick="prevSlide()"></div><div class="tap-next" onclick="nextSlide()"></div>
 </section>
 
 
@@ -434,7 +439,7 @@
   <p class="number">47</p>
   <p class="stat-label">veces que contaste la anécdota del Teto en el Uno</p>
   <p class="footnote">Y todavía la contás como si fuera la primera vez.</p>
-  <div class="tap-zone" onclick="nextSlide()"></div>
+  <div class="tap-prev" onclick="prevSlide()"></div><div class="tap-next" onclick="nextSlide()"></div>
 </section>
 
 
@@ -448,7 +453,7 @@
   <p class="number">9</p>
   <p class="stat-label">indias triggereadas con chistes</p>
   <p class="footnote">3 de ellas en el mismo día. Eso es talento.</p>
-  <div class="tap-zone" onclick="nextSlide()"></div>
+  <div class="tap-prev" onclick="prevSlide()"></div><div class="tap-next" onclick="nextSlide()"></div>
 </section>
 
 
@@ -481,7 +486,7 @@
     </div>
 
   </div>
-  <div class="tap-zone" onclick="nextSlide()"></div>
+  <div class="tap-prev" onclick="prevSlide()"></div><div class="tap-next" onclick="nextSlide()"></div>
 </section>
 
 
@@ -514,7 +519,7 @@
     </div>
 
   </div>
-  <div class="tap-zone" onclick="nextSlide()"></div>
+  <div class="tap-prev" onclick="prevSlide()"></div><div class="tap-next" onclick="nextSlide()"></div>
 </section>
 
 
@@ -556,7 +561,7 @@
     </div>
 
   </div>
-  <div class="tap-zone" onclick="nextSlide()"></div>
+  <div class="tap-prev" onclick="prevSlide()"></div><div class="tap-next" onclick="nextSlide()"></div>
 </section>
 
 
@@ -570,7 +575,7 @@
   <p class="number">3</p>
   <p class="stat-label">veces que dijiste que "empezabas el lunes"</p>
   <p class="footnote">El lunes sigue esperando.</p>
-  <div class="tap-zone" onclick="nextSlide()"></div>
+  <div class="tap-prev" onclick="prevSlide()"></div><div class="tap-next" onclick="nextSlide()"></div>
 </section>
 
 
@@ -585,7 +590,7 @@
     <h2>Otro año<br>más raro<br>que vos.</h2>
     <p>Gracias por existir exactamente como sos.<br>Te queremos, Cardi. 🖤</p>
   </div>
-  <div class="tap-zone" onclick="nextSlide()"></div>
+  <div class="tap-prev" onclick="prevSlide()"></div><div class="tap-next" onclick="nextSlide()"></div>
 </section>
 
 
@@ -615,9 +620,19 @@
     }
   }
 
+  function prevSlide() {
+    if (current > 0) {
+      slides[current].classList.remove('active');
+      current--;
+      slides[current].classList.add('active');
+      updateProgress();
+    }
+  }
+
   // Keyboard navigation (desktop)
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
   });
 
   updateProgress();
